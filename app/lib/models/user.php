@@ -3,15 +3,53 @@
     class User{
         private $dbhConn;
 
+        public $userName;
+        public $userFamilyName;
+        public $userEmail;
+        public $userID;
+
+        private $hashedPwd;
+        
+        public $userPwdHashed;
+
         public function __construct(){
             $this->dbhConn = new Dbh;
-            echo microtime(true).'<br>';
-            echo time().'<br>';
+
+            $this->createUserID();
+            $this->createDummyUser();
+        }
+
+        
+
+        public function createUser(){
+
+        }
+        
+        public function createUserID(){
+            $userID = microtime(true);
+            $userID = str_replace('.','M',$userID);
+            $this->userID = $userID;
+        }
+        public function hashPwd($pwd){
+            $this->hashedPwd = md5($pwd);
+        }
+
+
+
+
+
+
+
+
+
+
+
+        public function createDummyUser(){
             $data = [
-                $this->createUserID(),
-                'bola',
-                'mega',
-                'emailwe'.rand(),
+                $this->userID,
+                'bola'.rand(),
+                'mega'.rand(),
+                'emailwe'.rand().'@gmail.com',
                 'pwdsecret',
                 date('y-m-d h:i:s')
             ];
@@ -24,11 +62,5 @@
                 accCreatedDate=?
             ";
             $this->dbhConn->insertDbh($query, $data);
-        }
-
-        public function createUserID(){
-            $userID = microtime(true);
-            $userID = str_replace('.','M',$userID);
-            return $userID;
         }
     }
