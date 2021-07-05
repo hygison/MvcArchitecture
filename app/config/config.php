@@ -9,7 +9,7 @@
     date_default_timezone_set("Asia/Tokyo");
 
     define('APPROOT', dirname(dirname(__FILE__)));
-    define('URLROOT', 'localhost');
+    define('URLROOT', 'http://localhost');
     define('SITENAME', 'My MVC Architecture');
 
     define('DS', DIRECTORY_SEPARATOR);

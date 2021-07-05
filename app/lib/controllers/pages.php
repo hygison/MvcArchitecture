@@ -6,15 +6,18 @@
         }
 
         public function index(){
-            $data = [
+            $pageDataArr = [
                 'title' => 'My MCV Architecture - Index Page',
-                'name' => 'Bola',
             ];
-            $this->view('pages/index', $data);
+            $this->view('pages/index', $pageDataArr);
         }
        
-        public function about(){
-            $this->view('pages/about');
+
+        public function login(){
+            $pageDataArr = [
+                'title' => 'My MCV Architecture - Login',
+            ];
+            $this->view('pages/login', $pageDataArr);
         }
     }
 

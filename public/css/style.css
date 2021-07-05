@@ -1,0 +1,9 @@
+
+.tab{
+    background: #0044ff;
+    padding: 20px 15px;
+    cursor: pointer;
+}
+.tab .active{
+    background: pink!important;
+}
