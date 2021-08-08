@@ -18,6 +18,7 @@
     define('CONTROLLERS', LIB . DS . 'controllers');
     define('MODELS', LIB . DS . 'models');
     define('VIEWS', LIB . DS . 'views');
+    define('POSTROOT', VIEWS . DS . 'post');
     define('TRAITS', LIB . DS . 'traits');
 
     define('HELPERS', APPROOT . DS . 'helpers');

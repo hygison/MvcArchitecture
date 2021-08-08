@@ -1,28 +1,27 @@
 <?php
-
     class User{
+        use Validation;
+
         private $dbhConn;
+        private $tableName = 'users';
+        public $gname;
+        public $fname;
+        public $email;
+        public $pwd;
+        public $userID;        
 
-        public $userName;
-        public $userFamilyName;
-        public $userEmail;
-        public $userID;
-
-        private $hashedPwd;
-        
-        public $userPwdHashed;
 
         public function __construct(){
             $this->dbhConn = new Dbh;
-
-            $this->createUserID();
-            $this->createDummyUser();
         }
 
-        
-
-        public function createUser(){
-
+        public function registerValidate($gname, $fname, $email, $pwd, $confirmPwd){
+            $this->gname = $gname;
+            $this->fname = $fname;
+            $this->email =$email;
+            $this->pwd = $pwd;
+            $this->confirmPwd =$confirmPwd;
+            return true;
         }
         
         public function createUserID(){
@@ -30,13 +29,32 @@
             $userID = str_replace('.','M',$userID);
             $this->userID = $userID;
         }
+
         public function hashPwd($pwd){
-            $this->hashedPwd = md5($pwd);
+            return md5($pwd);
         }
 
 
-
-
+        public function createUser(){
+            $this->createUserID();
+            $data = [
+                $this->userID,
+                $this->gname,
+                $this->fname,
+                $this->email,
+                $this->hashPwd($this->pwd),
+                date('y-m-d h:i:s')
+            ];
+            $query = "INSERT INTO $this->tableName SET 
+                userID=?,
+                givenName=?,
+                familyName=?,
+                email=?,
+                pwd=?,
+                accCreatedDate=?
+            ";
+            $this->dbhConn->insertDbh($query, $data);
+        }
 
 
 
@@ -50,10 +68,10 @@
                 'bola'.rand(),
                 'mega'.rand(),
                 'emailwe'.rand().'@gmail.com',
-                'pwdsecret',
+                $this->hashPwd('pwdsecret'),
                 date('y-m-d h:i:s')
             ];
-            $query = "INSERT INTO users SET 
+            $query = "INSERT INTO $this->tableName SET 
                 userID=?,
                 givenName=?,
                 familyName=?,
@@ -63,4 +81,6 @@
             ";
             $this->dbhConn->insertDbh($query, $data);
         }
+
+        
     }
